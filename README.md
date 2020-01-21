@@ -15,12 +15,15 @@ Garmin allows for the download of this data (as well as other data sets that the
 The current system of viewing the data that the watch records is from [this](https://connect.garmin.com/modern/) link from Garmin.
 
 The downside of this system is that the user is constrained by the visuals presented by the Garmin team, which is often handy, however, sometimes it can be helpful to view it in different ways, or to observe long term trends. The connect application currently doesn't offer this functionality.
+The second downside of using the connect application is that it is not simple to download data in bulk, it is only possible to download the data on a day to day basis in a csv format.
 
 Garmin, as with all companies who gather data on their users, are required by [certain regulations](https://www.garmin.com/en-US/account/datamanagement/) to provide users with the ability to download all of the data that is associated with them. This is also to do with the privacy policies that they enforce.
 
 The best way to download all of this data is to use the following [link](https://www.garmin.com/en-US/account/datamanagement/exportdata/) where you can choose to [delete your data](https://www.garmin.com/en-US/account/datamanagement/deletedata/), [view your data](https://www.garmin.com/en-US/account/datamanagement/viewdata/), or [request your data for export](https://www.garmin.com/en-US/account/datamanagement/exportdata/).
 
 The data takes a while to be compiled from their side, then it is sent through as an email.
+
+The full list of downloadable data can be found in the following [link](https://www.garmin.com/en-US/account/datamanagement/viewdata/).
 
 # Data Format
 
@@ -61,7 +64,9 @@ In the case that the system could not detect the sleep activity, then the entry 
 
 
 
+# Other Data
 
+The bulk download option holds a wealth of other information. [This repository](https://github.com/andrewcooke/choochoo) acan also extract data from the .fit files which hold other data from the watch.
 
 
 
