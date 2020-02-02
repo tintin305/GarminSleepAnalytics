@@ -9,22 +9,12 @@ import datetime
 import matplotlib.pyplot as plt
 
 import glob
+# Load in the confirmed sleep entries.
+def loadConfirmedData():
 
-def loadData():
+    fileName = '../FormattedData/ConfirmedSleepDataEntries.csv'
 
-    folderLocation = '../GarminData/DI_CONNECT/DI-Connect-Wellness/*.json'
-
-    fileNames = []
-
-    fileNames = glob.glob(folderLocation)
-
-    sleepData = pd.DataFrame()
-
-
-    for sleepFile in fileNames:
-        data = pd.read_json(sleepFile)
-
-        sleepData = pd.concat([sleepData, data], ignore_index=True, sort=False)
+    sleepData = pd.read_csv(fileName, ignore_index=True, sort=False)
 
     # Making the date and time columns datetime objects.
     sleepData['sleepStartTimestampGMT'] = pd.to_datetime(sleepData['sleepStartTimestampGMT']) 
@@ -34,25 +24,6 @@ def loadData():
     return sleepData
 
 
-def saveRawSleepEntries(sleepData):
-
-    sleepData.to_csv('../FormattedData/GarminSleepData.csv', index=False)
-
-    return sleepData
-
-
-# This will remove the entries where the sleep for that day was not successfully recorded.s
-def removeUnconfirmedSleepEntries(sleepData):
-
-    sleepData.drop(sleepData[sleepData['sleepWindowConfirmationType'] == 'UNCONFIRMED'].index, inplace = True)
-
-    return sleepData
-
-def saveConfirmedSleepEntries(sleepData):
-
-    sleepData.to_csv('../FormattedData/ConformedSleepDataEntries.csv', index=False)
-
-    return None
 
 def plotMeanPieChart(sleepData):
 
@@ -139,32 +110,19 @@ def meanDays(daySleepData):
     for day in meanDays:
         unmeasurableSleepData.append(day['unmeasurableSeconds'])
 
-    numDays = 5
-    ind = np.arange(numDays)
-    width = 0.35
-
-    p1 = plt.bar(ind, retroData, color='b')
-    p2 = plt.bar(ind, deepSleepData, color='r', bottom=retro)
-
-    # plt.ylabel('Mean Seconds')
-    # plt.title('Mean day sleep by type')
-    # plt.xticks(ind, ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'))
-    # plt.yticks(np.arange(0, 8100, 100))
-    # plt.legend((p1[0], p2[0]), ('retro', 'Deep Sleep Data'))
-
-    plt.show()
+    meanDaysData = [retroData, deepSleepData, lightSleepData, remSleepData, awakeSleepData, unmeasurableSleepData]
+    
+    with open('../FormattedData/meanDaysData.csv','w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(meanDaysData)
 
     return meanDays
 
 if __name__ == "__main__":
 
-    sleepData = loadData()
-    
-    sleepData = saveRawSleepEntries(sleepData)
+    # Load in the confirmed sleep data entries.
+    sleepData = loadConfirmedData()
 
-    confirmedSleepEntries = removeUnconfirmedSleepEntries(sleepData)
-
-    saveConfirmedSleepEntries(confirmedSleepEntries)
 
     # getMeanValues(sleepData)
 
