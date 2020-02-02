@@ -7,13 +7,13 @@ import sys, os
 import matplotlib.pyplot as plt
 import datetime
 import matplotlib.pyplot as plt
-
 import glob
+
 # Load in the confirmed sleep entries.
 def loadConfirmedData():
 
     fileName = '../FormattedData/ConfirmedSleepDataEntries.csv'
-    sleepData = pd.read_csv(fileName, sort=False)
+    sleepData = pd.read_csv(fileName)
 
     # Making the date and time columns datetime objects.
     sleepData['sleepStartTimestampGMT'] = pd.to_datetime(sleepData['sleepStartTimestampGMT']) 
@@ -22,32 +22,56 @@ def loadConfirmedData():
 
     return sleepData
 
+def setMeanValues(sleepData):
 
+    deepSleepAverage = sleepData['deepSleepSeconds'].mean()
+    lightSleepAverage = sleepData['lightSleepSeconds'].mean()
+    remSleepAverage = sleepData['remSleepSeconds'].mean()
+    awakeSleepAverage = sleepData['awakeSleepSeconds'].mean()
 
-def plotMeanPieChart(sleepData):
+    fileName = '../FormattedData/meanSleepSeconds.csv'
+    with open(fileName, 'w') as outFile:
+        outFile.write('deepSleepSeconds,' + str(deepSleepAverage) + '\n')
+        outFile.write('lightSleepSeconds,' + str(lightSleepAverage) + '\n')
+        outFile.write('remSleepSeconds,' + str(remSleepAverage) + '\n')
+        outFile.write('awakeSleepSeconds,' + str(awakeSleepAverage) + '\n')
 
-    labels = ['deepSleepSeconds','lightSleepSeconds','remSleepSeconds','awakeSleepSeconds','unmeasurableSeconds']
-    sizes = [(sleepData['deepSleepSeconds'].mean()), (sleepData['lightSleepSeconds'].mean()), (sleepData['remSleepSeconds'].mean()), (sleepData['awakeSleepSeconds'].mean()), (sleepData['unmeasurableSeconds'].mean())]
-    colours = ['darkblue', 'blue', 'purple', 'pink', 'red']
-    explode = (0.1, 0, 0, 0)  # explode 1st slice
+    return None
+
+def getMeanValues():
+
+    fileName = '../FormattedData/meanSleepSeconds.csv'
+    sleepData = pd.read_csv(fileName, header=None)
+
+    deepSleepAverage = sleepData[1].iloc[0]
+    lightSleepAverage = sleepData[1].iloc[1]
+    remSleepAverage = sleepData[1].iloc[2]
+    awakeSleepAverage = sleepData[1].iloc[3]
+
+    sleepMeanValues = [deepSleepAverage, lightSleepAverage, remSleepAverage, awakeSleepAverage]
+
+    return sleepMeanValues
+
+# Values of sleepMeanValues are formatted in a vector in the order of: deepSleepSeconds, lightSleepSeconds, remSleepSeconds, awakeSleepSeconds.
+def plotMeanPieChart(sleepMeanValues):
+
+    
+    labels = ['deepSleepSeconds','lightSleepSeconds','remSleepSeconds','awakeSleepSeconds']
+    sizes = [sleepMeanValues[0], sleepMeanValues[1], sleepMeanValues[2], sleepMeanValues[3]]
+    colours = ['darkblue', 'blue', 'purple', 'pink']
+    # explode = (0.1, 0, 0, 0)  # explode 1st slice
 
     patches, texts = plt.pie(sizes, colors=colours, shadow=True, startangle=90)
     plt.legend(patches, labels, loc="best")
     plt.axis('equal')
     plt.tight_layout()
-    plt.show()
+    fileName = '../AnalysisFigures/MeanSleepSecondsPerType'
+    plt.savefig(fileName + '.eps', format='eps', dpi=2200, bbox_inches='tight')
+    plt.savefig(fileName + '.pdf', format='pdf', dpi=2200, bbox_inches='tight')
+    plt.close('all')
 
     return None
 
-def getMeanValues(sleepData):
-
-    print(sleepData['deepSleepSeconds'].mean())
-    print(sleepData['lightSleepSeconds'].mean())
-    print(sleepData['remSleepSeconds'].mean())
-    print(sleepData['awakeSleepSeconds'].mean())
-    print(sleepData['unmeasurableSeconds'].mean())
-
-    return None
 
 # Plots a line for each sleep type for each day of the week.
 def plotDayTrend(sleepData):
@@ -122,10 +146,12 @@ if __name__ == "__main__":
     # Load in the confirmed sleep data entries.
     sleepData = loadConfirmedData()
 
+    # Save the mean values from each of the different sleep groups.
+    setMeanValues(sleepData)
 
-    # getMeanValues(sleepData)
+    sleepMeanValues = getMeanValues()
 
-    # plotMeanPieChart(sleepData)
+    plotMeanPieChart(sleepMeanValues)
 
     daySleepData = dayData(sleepData)
 

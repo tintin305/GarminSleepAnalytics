@@ -7,10 +7,7 @@ import sys, os
 import matplotlib.pyplot as plt
 import datetime
 import matplotlib.pyplot as plt
-
 import glob
-
-
 
 def loadData():
 
