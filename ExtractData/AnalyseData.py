@@ -13,8 +13,7 @@ import glob
 def loadConfirmedData():
 
     fileName = '../FormattedData/ConfirmedSleepDataEntries.csv'
-
-    sleepData = pd.read_csv(fileName, ignore_index=True, sort=False)
+    sleepData = pd.read_csv(fileName, sort=False)
 
     # Making the date and time columns datetime objects.
     sleepData['sleepStartTimestampGMT'] = pd.to_datetime(sleepData['sleepStartTimestampGMT']) 
