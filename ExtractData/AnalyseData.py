@@ -55,7 +55,10 @@ def getMeanValues():
 # Values of sleepMeanValues are formatted in a vector in the order of: deepSleepSeconds, lightSleepSeconds, remSleepSeconds, awakeSleepSeconds.
 def plotMeanPieChart(sleepMeanValues):
 
-    
+    # TODO Determine what/if the DPI setting for this needs to be.
+    # TODO There is a warning on creating the postscript, that the backend doesn't support transparency.
+    # TODO Have the values for each of the part of the chart displayed on the chart.
+
     labels = ['deepSleepSeconds','lightSleepSeconds','remSleepSeconds','awakeSleepSeconds']
     sizes = [sleepMeanValues[0], sleepMeanValues[1], sleepMeanValues[2], sleepMeanValues[3]]
     colours = ['darkblue', 'blue', 'purple', 'pink']
@@ -66,12 +69,12 @@ def plotMeanPieChart(sleepMeanValues):
     plt.axis('equal')
     plt.tight_layout()
     fileName = '../AnalysisFigures/MeanSleepSecondsPerType'
+
     plt.savefig(fileName + '.eps', format='eps', dpi=2200, bbox_inches='tight')
     plt.savefig(fileName + '.pdf', format='pdf', dpi=2200, bbox_inches='tight')
     plt.close('all')
 
     return None
-
 
 # Plots a line for each sleep type for each day of the week.
 def plotDayTrend(sleepData):
@@ -80,7 +83,7 @@ def plotDayTrend(sleepData):
 
     return None
 
-def dayData(sleepData):
+def dayOfWeekData(sleepData):
 
     sleepData['Day'] = sleepData['sleepEndTimestampGMT'].dt.dayofweek
 
@@ -141,6 +144,28 @@ def meanDays(daySleepData):
 
     return meanDays
 
+# This will plot seven pie charts on one figure showing each day of the week.
+def plotPieChartDayOfWeek(daySleepData):
+
+    labels = ['deepSleepSeconds','lightSleepSeconds','remSleepSeconds','awakeSleepSeconds']
+    sizes = [sleepMeanValues[0], sleepMeanValues[1], sleepMeanValues[2], sleepMeanValues[3]]
+    colours = ['darkblue', 'blue', 'purple', 'pink']
+    # explode = (0.1, 0, 0, 0)  # explode 1st slice
+
+    patches, texts = plt.pie(sizes, colors=colours, shadow=True, startangle=90)
+    plt.legend(patches, labels, loc="best")
+    plt.axis('equal')
+    plt.tight_layout()
+    fileName = '../AnalysisFigures/MeanSleepSecondsPerType'
+
+    plt.savefig(fileName + '.eps', format='eps', dpi=2200, bbox_inches='tight')
+    plt.savefig(fileName + '.pdf', format='pdf', dpi=2200, bbox_inches='tight')
+    plt.close('all')
+
+
+
+    return None
+
 if __name__ == "__main__":
 
     # Load in the confirmed sleep data entries.
@@ -153,12 +178,14 @@ if __name__ == "__main__":
 
     plotMeanPieChart(sleepMeanValues)
 
-    daySleepData = dayData(sleepData)
+    # This returns a vector where each item holds a dataframe for each day of the weeks data separated.
+    daySleepData = dayOfWeekData(sleepData)
 
     meanDays(daySleepData)
 
     plotDayTrend(sleepData)
 
+    plotPieChartDayOfWeek(daySleepData)
 
 
 
