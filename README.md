@@ -1,4 +1,5 @@
 # GarminSleepAnalytics
+
 Extraction and analysis of sleep data from Garmin watches.
 
 
@@ -73,7 +74,10 @@ In the case that the system could not detect the sleep activity, then the entry 
 The bulk download option holds a wealth of other information. [This repository](https://github.com/andrewcooke/choochoo) acan also extract data from the .fit files which hold other data from the watch.
 
 
+## Blog Posts
 
+I have a post that speaks about the analytics that I have programmed into this system.
+It delves into the reasoning on why I decided to create this repository and what kinds of analytics it allows for.
 
 
 
