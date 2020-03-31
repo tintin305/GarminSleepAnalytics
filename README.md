@@ -66,7 +66,12 @@ In the case that the system could not detect the sleep activity, then the entry 
 
 # Data Analysis
 
-
+I found these posts for which it would be interesting to try to replicate.
+[1](https://www.visualcapitalist.com/visualizing-worlds-sleeping-habits/)
+[2](https://www.quantifiedbob.com/analyzing-a-year-of-my-sleep-tracking-data/)
+[3](https://www.theverge.com/2019/7/21/20699484/sleep-blanket-data-visualisation-seung-lee)
+[4](https://interworks.com/blog/rrouse/2015/09/14/visualizing-data-my-sleep-tableau)
+[5](https://towardsdatascience.com/analyzing-online-activity-and-sleep-patterns-10c997591e76)
 
 
 # Other Data
