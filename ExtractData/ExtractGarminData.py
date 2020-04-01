@@ -55,27 +55,11 @@ def saveConfirmedSleepEntries(sleepData):
 
     return None
 
-def plotMeanPieChart(sleepData):
-
-    labels = ['deepSleepSeconds','lightSleepSeconds','remSleepSeconds','awakeSleepSeconds','unmeasurableSeconds']
-    sizes = [(sleepData['deepSleepSeconds'].mean()), (sleepData['lightSleepSeconds'].mean()), (sleepData['remSleepSeconds'].mean()), (sleepData['awakeSleepSeconds'].mean()), (sleepData['unmeasurableSeconds'].mean())]
-    colours = ['darkblue', 'blue', 'purple', 'pink', 'red']
-    explode = (0.1, 0, 0, 0)  # explode 1st slice
-
-    patches, texts = plt.pie(sizes, colors=colours, shadow=True, startangle=90)
-    plt.legend(patches, labels, loc="best")
-    plt.axis('equal')
-    plt.tight_layout()
-    plt.show()
-
-    return None
-
-
 
 if __name__ == "__main__":
 
     # Extract all of the raw data and save it to a csv file.
-    sleepData = loadData()    
+    sleepData = loadData()
     saveRawSleepEntries(sleepData)
 
     # Extract the confirmed entries and save this to a csv file.
