@@ -86,15 +86,16 @@ def dayOfWeekData(sleepData):
     # Removint the rows that have NaN entries as part of the sleep.
     sleepData = removeNanEntries(sleepData)
 
-    mondayData = sleepData[sleepData['Day']==0]
-    tuesdayData = sleepData[sleepData['Day']==1]
-    wednesdayData = sleepData[sleepData['Day']==2]
-    thursdayData = sleepData[sleepData['Day']==3]
-    fridayData = sleepData[sleepData['Day']==4]
-    saturdayData = sleepData[sleepData['Day']==5]
-    sundayData = sleepData[sleepData['Day']==6]
+    sundayData = sleepData[sleepData['Day']==0]
+    mondayData = sleepData[sleepData['Day']==1]
+    tuesdayData = sleepData[sleepData['Day']==2]
+    wednesdayData = sleepData[sleepData['Day']==3]
+    thursdayData = sleepData[sleepData['Day']==4]
+    fridayData = sleepData[sleepData['Day']==5]
+    saturdayData = sleepData[sleepData['Day']==6]
 
-    daySleepData = [mondayData, tuesdayData, wednesdayData, thursdayData, fridayData, saturdayData, sundayData]
+
+    daySleepData = [sundayData, mondayData, tuesdayData, wednesdayData, thursdayData, fridayData, saturdayData]
 
     return daySleepData
 
@@ -102,15 +103,16 @@ def dayOfWeekData(sleepData):
 # Gets the mean values for each sleep type for each day of the week.
 def setMeanDays(daySleepData):
 
-    meanMonday = daySleepData[0].mean()
-    meanTuesday = daySleepData[1].mean()
-    meanWednesday = daySleepData[2].mean()
-    meanThursday = daySleepData[3].mean()
-    meanFriday = daySleepData[4].mean()
-    meanSaturday = daySleepData[5].mean()
-    meanSunday = daySleepData[6].mean()
+    meanSunday = daySleepData[0].mean()
+    meanMonday = daySleepData[1].mean()
+    meanTuesday = daySleepData[2].mean()
+    meanWednesday = daySleepData[3].mean()
+    meanThursday = daySleepData[4].mean()
+    meanFriday = daySleepData[5].mean()
+    meanSaturday = daySleepData[6].mean()
 
-    meanDays = [meanMonday, meanTuesday, meanWednesday, meanThursday, meanFriday, meanSaturday, meanSunday]
+
+    meanDays = [meanSunday, meanMonday, meanTuesday, meanWednesday, meanThursday, meanFriday, meanSaturday]
 
     retroData = []
     for day in meanDays:
@@ -148,15 +150,16 @@ def setMeanDays(daySleepData):
 # Gets the mean values for each sleep type for each day of the week.
 def getMeanDays(daySleepData):
 
-    meanMonday = daySleepData[0].mean()
-    meanTuesday = daySleepData[1].mean()
-    meanWednesday = daySleepData[2].mean()
-    meanThursday = daySleepData[3].mean()
-    meanFriday = daySleepData[4].mean()
-    meanSaturday = daySleepData[5].mean()
-    meanSunday = daySleepData[6].mean()
+    meanSunday = daySleepData[0].mean()
+    meanMonday = daySleepData[1].mean()
+    meanTuesday = daySleepData[2].mean()
+    meanWednesday = daySleepData[3].mean()
+    meanThursday = daySleepData[4].mean()
+    meanFriday = daySleepData[5].mean()
+    meanSaturday = daySleepData[6].mean()
 
-    meanDays = [meanMonday, meanTuesday, meanWednesday, meanThursday, meanFriday, meanSaturday, meanSunday]
+
+    meanDays = [meanSunday, meanMonday, meanTuesday, meanWednesday, meanThursday, meanFriday, meanSaturday]
 
     retroData = []
     for day in meanDays:
@@ -193,13 +196,13 @@ def getMeanDays(daySleepData):
 def daySwitcher(day):
 
     switcher = {
-        'Monday': 0,
-        'Tuesday': 1,
-        'Wednesday': 2,
-        'Thursday': 3,
-        'Friday': 4,
-        'Saturday': 5,
-        'Sunday': 6
+        'Sunday': 0,
+        'Monday': 1,
+        'Tuesday': 2,
+        'Wednesday': 3,
+        'Thursday': 4,
+        'Friday': 5,
+        'Saturday': 6
     }
 
     return switcher.get(day, 'Invalid day')
