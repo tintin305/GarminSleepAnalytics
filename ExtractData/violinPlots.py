@@ -33,12 +33,30 @@ def timeViolinPlots(daySleepData):
 
     return None
 
+
+def monthlyViolinPlots(sleepData):
+
+        # The dataframe needs to be formatted such that one column shows the total sleep for that whole day.
+    sleepData['AccumulatedSleep'] = sleepData['deepSleepSeconds'] + sleepData['lightSleepSeconds'] + sleepData['remSleepSeconds']
+    sleepData['AccumulatedSleep'] = sleepData['AccumulatedSleep'].div(60**2)
+    sleepData['Month'] = sleepData['calendarDate'].apply(lambda t: t.strftime('%Y-%m'))
+    sns.violinplot(data=sleepData, x='Month', y='AccumulatedSleep')
+    plt.show()
+
+    print(sleepData)
+
+
+    return None
+
+
 if __name__ == "__main__":
 
     sleepData = AnalyseData.loadConfirmedData()
 
     # This returns a vector where each item holds a dataframe for each day of the weeks data separated.
-    daySleepData = dayOfWeekData(sleepData)
+    # daySleepData = dayOfWeekData(sleepData)
 
-    timeViolinPlots(daySleepData)
+    # timeViolinPlots(daySleepData)
 
+    sleepData = AnalyseData.removeNanEntries(sleepData)
+    monthlyViolinPlots(sleepData)

@@ -26,7 +26,6 @@ def boxPlot(sleepData):
     # The dataframe needs to be formatted such that one column shows the total sleep for that whole day.
     sleepData['AccumulatedSleep'] = sleepData['deepSleepSeconds'] + sleepData['lightSleepSeconds'] + sleepData['remSleepSeconds']
     sleepData['AccumulatedSleep'] = sleepData['AccumulatedSleep'].div(60**2)
-    # d = pd.DataFrame({'x': sleepData['calendarDate'], 't': })
     sleepData['Month'] = sleepData['calendarDate'].apply(lambda t: t.strftime('%Y-%m'))
     sns.boxplot(data=sleepData, x='Month', y='AccumulatedSleep')
     plt.show()
