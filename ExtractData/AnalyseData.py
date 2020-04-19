@@ -75,6 +75,7 @@ def removeNanEntries(sleepData):
     # Removing days that have NaN values, ie days that are 'Off Wrist', or 'AUTO_CONFIRMED_FINAL'
     sleepData.drop(sleepData[sleepData['sleepWindowConfirmationType'] == 'AUTO_CONFIRMED_FINAL'].index, inplace=True)
     sleepData.drop(sleepData[sleepData['sleepWindowConfirmationType'] == 'OFF_WRIST'].index, inplace=True)
+    sleepData.drop(sleepData[sleepData['sleepWindowConfirmationType'] == 'AUTO_CONFIRMED'].index, inplace=True)
 
     return sleepData
 
